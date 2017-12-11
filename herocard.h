@@ -17,7 +17,7 @@ class herocard
 
     public: void saveHeroCard(string, vector <string>, vector <string>, int, int);
 
-}
+};
 #endif
 
 

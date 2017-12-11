@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include "herocard.h"
 
 using namespace std;
 
@@ -9,8 +10,8 @@ using namespace std;
 string playerChoice;
 vector <string> heroInventory;
 vector <string> heroAchievements;
-int instantDeath(int&);
-int fightSpider(int, int&);
+void instantDeath(int&);
+int fightSpider(int&, int);
 int spiderOne;
 int heroHealth;
 int heroAttack;
@@ -137,9 +138,7 @@ int main()
 
         if(enterCrevice == 'A' || enterCrevice == 'a')
         { 
-          //Player dies immediately. If function worked.
-          // int instantDeath(int& heroHealth);
-          heroHealth = 0;
+            instantDeath(heroHealth);
 
         }else if(enterCrevice == 'B' || enterCrevice == 'b'){
         cout<<"Now continue on to examine the figure behind the tree trunk."<<endl;
@@ -208,8 +207,7 @@ int main()
 
       if(secondChoice == 'A' || secondChoice == 'a' )
       {
-       //Couldnt get function to work?
-       // heroHealth = fightSpider(int heroHealth, int& spiderOne);
+       spiderOne = fightSpider(heroHealth, spiderOne);
        break;
       }else{
 
@@ -218,80 +216,77 @@ int main()
         heroAchievements.push_back("Dead Men Tell No Tales: Run away from the spider");
 
       }
-      //cout<<"You have killed the first spider guardian."<<endl;
+      cout<<"You have killed the first spider guardian."<<endl;
 
-     //This is where i wanted to include a save character card feature but continued getting erroson my herocard.h and .cpp files
-     //char saveGameOne;
-     // do{
-     // cout<<"Would you like to save your Hero Card?(A) Yes (B) No"<<endl;
-     //       cin>>saveGame;
-     //     }while(savegame != 'A' && savegame != 'a' && saveGame != 'B' && saveGame != 'b');
+     char saveGame;
+      do{
+      cout<<"Would you like to save your Hero Card?(A) Yes (B) No"<<endl;
+            cin>>saveGame;
+          }while(saveGame != 'A' && saveGame != 'a' && saveGame != 'B' && saveGame != 'b');
      
-    //   if(saveGame == 'A' || saveGame == 'a')
-   //   {
-     //   herocard hero;
-     //   hero.saveHeroCard(string heroName, vector <string> heroInventory, vector <string> heroAchievements, int heroHealth, int heroAttack);
+       if(saveGame == 'A' || saveGame == 'a')
+      {
+        herocard hero;
+        hero.saveHeroCard(heroName, heroInventory, heroAchievements, heroHealth, heroAttack);
 
-     // }else{
-     //   cout<<"Let's hope you don't regret that."<<endl;
-    //  }
+      }else{
+        cout<<"Let's hope you don't regret that."<<endl;
+      }
 
-    //  break;
+      break;
       }while(heroHealth > 0);
   
 return 0;
 }
 
 
-//void instantDeath(int& heroHealth)
-//{
-    //cout<<"You have entered the cave"<<endl;
-    //cout<<"A giant spider falls from the ceiling and charges towards you."<<endl;
-    //cout<<"You have nothing to use against the spider."<<endl;
-    //cout<<"You have died."<<endl;
-    //heroHealth = 0;
+void instantDeath(int& heroHealth)
+{
+    cout<<"You have entered the cave"<<endl;
+    cout<<"A giant spider falls from the ceiling and charges towards you."<<endl;
+    cout<<"You have nothing to use against the spider."<<endl;
+    cout<<"You have died."<<endl;
+    heroHealth = 0;
+}
 
-    //return 0;
-//}
-
-//int fightSpider(int heroHealth, int& spiderOne)
-//{
-    //int damagedHero;
-    //int spiderAttack = 20;
-    //char spiderFight;
-    //do{
-        //cout<<"Attack spider? (A) Yes (B) Use potion"<<endl;
-        //cin<<spiderFight;
-        //if(spiderFight == 'A' || spiderFight == 'a')
-         //{
-           //cout<<"You slash the spider with your sword"<<endl;
-           //spiderOne = spiderOne - heroAttack;
-           //cout<<"Spider is at "<<spiderOne<<" health."<<endl;
-           //cout<<"The spider jabs at you with one of its giant legs"<<endl;
-           //damagedHero = herohealth - spiderAttack
-           //cout<<"You are at "<<damagedHero<<" health"<<endl;
-        //}else if(spiderFight == 'B' || spiderFight == 'b'){
+int fightSpider(int& heroHealth, int spiderOne)
+{
+    int damagedSpider;
+    int spiderAttack = 20;
+    char spiderFight;
+    do{
+        cout<<"Attack spider? (A) Yes (B) Use potion"<<endl;
+        cin>>spiderFight;
+        if(spiderFight == 'A' || spiderFight == 'a')
+         {
+           cout<<"You slash the spider with your sword"<<endl;
+           damagedSpider = spiderOne - heroAttack;
+           cout<<"Spider is at "<<damagedSpider<<" health."<<endl;
+           cout<<"The spider jabs at you with one of its giant legs"<<endl;
+           heroHealth = heroHealth - spiderAttack;
+           cout<<"You are at "<<heroHealth<<" health"<<endl;
+        }else if(spiderFight == 'B' || spiderFight == 'b'){
            
-           //if(heroInventory[2] == "Potion")
-           //{
-             //cout<<"Your health has been restored"
-             //damagedHero = 100;
-           //}else{
-             //cout<<"You do not have apotion to use."<<endl;
-           //}
-        //}
-        //}while(damagedHero > 0 && spiderOne > 0);
-     //if(damagedHero <= 0)
-     //{
-     //cout<<"You have died."<<endl;
-     //return damagedhero;
-     //}else if(damagedHero > 0){
-     //cout<<"You defeated the spider!"<<endl;
-     //heroAchievements.push_back("Avenger: Kill the spider that killed the Thistle Knight");
-     //return damagedHero;
-     //}
+           if(heroInventory[2] == "Potion")
+           {
+             cout<<"Your health has been restored";
+             heroInventory[2] = "Empty";
+             heroHealth = 100;
+           }else{
+             cout<<"You do not have a potion to use."<<endl;
+           }
+        }
+        }while(heroHealth > 0 && damagedSpider > 0);
+     if(heroHealth <= 0)
+     {
+     cout<<"You have died."<<endl;
+     }else if(heroHealth > 0){
+     cout<<"You defeated the spider!"<<endl;
+     heroAchievements.push_back("Avenger: Kill the spider that killed the Thistle Knight");
+     return damagedSpider;
+     }
 
-//}
+}
 
 
 

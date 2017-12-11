@@ -12,7 +12,7 @@ void herocard::saveHeroCard(string heroTag, vector <string> heroStuff, vector <s
   heroAchievements = heroGoals;
 
   ofstream myfile;
-  myfile.open(heroName);
+  myfile.open("Hero-Card.txt");
   myfile<<heroName;
   myfile<<"Hero Health: \n";
   myfile<<heroHealth;
